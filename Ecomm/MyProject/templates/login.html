@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'CSS/login4.css'%}">
+<div class="container">
+    <div class="screen mt-5">
+        <div class="screen__content">
+            <form class="login" method="POST" action="">
+              {% csrf_token %}
+                <div class="login__field">
+                    <i class="login__icon fa fa-user"></i>
+                    <input type="text" name="username" class="login__input" placeholder="User name / Email">
+                </div>
+                <div class="login__field">
+                    <i class="login__icon fa fa-lock"></i>
+                    <input type="password" name="password" class="login__input" placeholder="Password">
+                </div>
+                <!-- <small><a href="">forgotten your password?</a></small> -->
+                <div class="d-flex justify-content-center mt-3 login_container">
+  				 				<input style="border: None;font-weight:bold;"class="login__submit" type="submit" value="Login">
+  				   		</div>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+            <div class="social-icons">
+                <h3>log in via</h3>
+                
+                <a href="#" class="social-login__icon fa fa-facebook"></a>
+                <a href="#" class="social-login__icon fa fa-google"></a>
+            </div>
+            <div class="">
+
+            </div>
+            <div style="font-weight: bold;color: red;"class="d-flex justify-content-center">
+              {% if messages %}
+                  {% for message in messages %}
+                      {{ message }}
+                  {% endfor %}
+              {% endif %}
+            </div>
+            <div class="mt-4">
+			<div class="d-flex justify-content-center links">
+				<strong>Don't have an account?</strong> <a href="{% url 'mp:registerpage' %}" style="color: aliceblue;"class="ml-2">Sign Up</a>
+			</div>
+
+		</div>
+
+
+        </div>
+        <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+        </div>
+    </div>
+</div>
+{% endblock content %}

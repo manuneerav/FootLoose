@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'CSS/new.css'%}">
+<div style="margin-top: 4rem;" class="container">
+  <!-- <a style="width: 25%;"class="btn btn-dark my-3" href="{% url 'mp:logout_view' %}">Go Back</a> -->
+  <!-- <br> -->
+  <div class="row">
+    <div style="max-width:16rem;max-height: 20rem;overflow: hidden;"class=" card col-md-6">
+      <img style="max-width:15rem;"src="{{ product.image.url }}" alt="" class="img-fluid">
+    </div>
+    <div class="col-md-3">
+      <div class="list-group list-group-flush">
+        <div class="list-group-item">
+          <h4 style="font-family: 'Courier New', monospace;">{{ product.name|capfirst}}</h4>
+        </div>
+        <div class="list-group-item">
+          <div id = "rating"class="rating">
+          </div>
+        </div>
+        <div class="list-group-item">
+          <div class="row">
+            <div class="col"style="font-family: 'Courier New', monospace;">Size</div>
+            <div class="col">
+              <select id="size"class="form-control">
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item"style="font-family: 'Courier New', monospace;"><strong style="font-size: 1.5em;font-family: 'Courier New'style="font-family: 'Courier New', monospace;";">Price: ₹{{product.newT}}0</strong><s style="color:	#808080;font-size: 1em;">₹{{ product.price }}0  </s> <strong style="color:#009900;font-size:1.2em;font-family: 'Courier New', monospace;">{{product.discount}}%off</strong></div>
+        <div class="list-group-item"style="font-family: 'Courier New', monospace;">Description: {{ product.discription }}</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="list-group list-group-flush">
+          <div class="list-group-item">
+              <div class="row"style="font-family: 'Courier New', monospace;"><div class="col">Status:</div>
+              <div class="col"style="font-family: 'Courier New', monospace;">In Stock</div>
+            </div>
+          </div>
+        {% if user.is_authenticated %}
+        <div class="list-group-item"><button type="button" id="atc" pid = {{product.pk}} class="btn-block btn btn-dark"style="font-family: 'Courier New', monospace;">Add To Cart</button></div>
+        {% else %}
+        <a style="text-decoration: none;" href="{% url 'mp:loginpage' %}"><div class="list-group-item"><button type="button" class="btn-block btn btn-dark">Add To Cart</button></div></a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  const star = {{product.str_rating}}
+  console.log(star);
+  // const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
+  var atc = document.getElementById('atc')//add to cart
+  var ratethestar = document.getElementsByClassName('ratethestar')
+  const rating = document.getElementById('rating')
+    atc.addEventListener('click',f=>{
+      var size = document.getElementById('size')
+      var s = size.options[size.selectedIndex].value;
+      v = atc.getAttribute("pid")
+      m(v,s)
+    })
+  const m = (v,s) => {
+    $.ajax({
+        type: 'POST',
+        url:'http://127.0.0.1:8000/add_to_cart/'+v+'/',
+        data:{
+          'csrfmiddlewaretoken':csrf,
+          'size':s
+        },
+        success: function (i) {
+          window.location.href = "{% url 'mp:cart' %}";
+        }
+    })
+  }
+  rating.innerHTML = ""
+  for (let i = 0; i < star; i++) {
+          rating.innerHTML += `<i style="color: rgb(248, 232, 37);"class="fa fa-star fa-lg mr-sm-2" aria-hidden="true"></i>
+            `
+  }
+
+</script>
+
+
+
+
+<div class="my-5">
+  <div class="card-body">
+    {% if reviews %}
+    <h4>Reviews</h4>
+    {% endif %}
+    {% for r in reviews %}
+    <div class="list-group-item">
+
+
+    <div style="margin-left: 4px;"class="row">
+      <h6 style="margin-right: 8px;"><strong>{{r.comment}}</strong></h6>
+      <div id={{r.pk}} class="ra">
+      </div>
+    </div>
+  <div>
+    <small><span class="text-muted">By {{r.customer.name}} . {{r.date}}</span></small>
+  </div>
+  <h7>{{r.review}}</h7>
+  </div>
+  <script>
+  var rat = document.getElementById({{r.pk}})
+  var st = {{r.score}}
+  console.log(st)
+  for (let i = 0; i < st; i++) {
+          rat.innerHTML += `<i style="color: rgb(248, 232, 37);"class="fa fa-star fa-xs mr-sm-1" aria-hidden="true"></i>`
+
+  }
+  </script>
+  {% endfor %}
+</div>
+{% if rev %}
+
+{% else %}
+{% if user.is_authenticated %}
+<form action=''  style="justify-content:center;" id = 'form' method="POST">
+  <label for=""><span><strong>Write a Review!</strong></span></label><br>
+  <input style="width:50%;"type="text" placeholder="comment..." class="form-control" name="comment" id="comment">
+  <textarea style="width:50%;resize: none;"name="review" placeholder="write a description..." class="form-control" id="review" cols="50" rows="4"></textarea><br>
+  <div style="margin-left: 20px;" class="row">
+    <h5 type="button" class = "stud" st_id = 1><i class="fa fa-star fa-lg mr-sm-3" aria-hidden="true"></i><h5/>
+    <h5 type="button" class = "stud" st_id = 2><i class="fa fa-star fa-lg mr-sm-3" aria-hidden="true"></i><h5/>
+    <h5 type="button" class = "stud" st_id = 3><i class="fa fa-star fa-lg mr-sm-3" aria-hidden="true"></i><h5/>
+    <h5 type="button" class = "stud" st_id = 4><i class="fa fa-star fa-lg mr-sm-3" aria-hidden="true"></i><h5/>
+    <h5 type="button" class = "stud" st_id = 5><i class="fa fa-star fa-lg mr-sm-3" aria-hidden="true"></i><h5/>
+  </div>
+  <h5 style="font-family: 'Courier New', monospace;"id="submit" type="button" class="login__submit">submit</h5>
+</form>
+<style media="screen">
+i:hover {
+color: rgb(248, 232, 37);
+}
+</style>
+</div>
+<script type="text/javascript">
+console.log(123456);
+var st = 0
+var submit = document.getElementById('submit')
+var stud = document.getElementsByClassName('stud')
+for (let i = 0; i < stud.length; i++) {
+  console.log(stud);
+  // const st = stud[i].getAttribute("st_id")
+  stud[i].addEventListener('click',g=>{
+    for (let j = 0; j < stud.length; j++) {
+    $(stud[j]).css({"color": "black"});}
+    for (let j = 0; j <= i; j++) {
+    $(stud[j]).css({"color": "yellow"});}
+    // $(stud[i]).css({"color": "yellow"});
+    this.st = stud[i].getAttribute("st_id")
+    console.log(st);
+  })
+
+}
+submit.addEventListener('click',f=>{
+  if(st>0){h(st)}
+  else{alert("fill review first")}
+})
+const h=(st)=>{
+  var review = document.getElementById('review').value
+  var comment = document.getElementById('comment').value
+  var stay = st
+  $.ajax({
+      type: 'POST',
+      url:'http://127.0.0.1:8000/review/{{product.pk}}/',
+      data:{
+        'csrfmiddlewaretoken':csrf,
+        'review':review,
+        'comment':comment,
+        'stay':stay,
+      },
+      success:function (i) {
+        window.location.href = "{% url 'mp:itempage_pk' pk=product.pk %}";
+      },
+        error:(err)=>{
+  					console.log(err)
+  			}
+  })
+}
+</script>
+{% endif %}
+{% endif %}
+<div style="margin-top: 5rem;margin-bottom: 2rem;" class="">
+  <!-- <p>More From {{product.brand}}</p> -->
+  {% if recommend.count > 1 %}
+  <h3 style="font-family: 'Courier New', monospace;">More From {{product.brand|capfirst }}</h3>
+  <div class="card container">
+    <div style="margin-top: 1rem;margin-bottom: 1rem;" class="row">
+      {% for rec in recommend%}
+        {% if rec.pk != product.pk %}
+          <a style="text-decoration: none;" href="{% url 'mp:itempage_pk' pk=rec.pk %}"><div class=" card uppercard"style="height:17rem;margin-left: 2rem;">
+            <img style="margin-top:auto;height:15rem;max-width:15rem"src="{{ rec.image.url }}" class="card-img-top" alt="oops">
+            <h5 style="text-align: center;color: black;margin-left:auto;margin-right: auto;font-family: 'Courier New', monospace;"><strong>{{rec.name|capfirst}}</strong></h5>
+          </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+</div>
+
+{% endblock content %}

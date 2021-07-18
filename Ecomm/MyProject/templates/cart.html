@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<link rel="stylesheet" href="{% static 'CSS/new.css' %}">
+<link rel="stylesheet" href="{% static 'CSS/n.css'%}">
+
+<div style="margin-top: 4rem;" class="mxp">
+  <!--Section: Block Content-->
+  <section>
+    <!--Grid row-->
+    <div class=" row">
+      <!--Grid column-->
+      <div class="col-lg-8">
+
+        <!-- Card -->
+        <h4 class="mb-4"style="font-family: 'Courier New', monospace;">Cart</h4>
+        {% if items.count > 0 %}
+        {% else %}
+        <h1 style=" color:black;font-family: 'Courier New', monospace;"><strong>Yor Cart is Empty</strong></h1>
+        {% endif %}
+        <div style="border-radius: 0;"class="card wish-list mb-3">
+          <div class="card-body">
+            {% for item in items %}
+              <div class="row mb-4">
+                <div class="col-md-5 col-lg-3 col-xl-3">
+                  <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                    <a style=" text-decoration: none;"href="{% url 'mp:itempage_pk' pk=item.product.pk %}"><img style="max-width: 15rem;max-height: 17rem;" class="img-fluid w-100"
+                      src="{{item.product.image.url}}" alt="Sample"></a>
+                  </div>
+                </div>
+                <div class="col-md-7 col-lg-9 col-xl-9">
+                  <div>
+                    <div class="d-flex justify-content-between">
+                      <div>
+
+                        <a style=" text-decoration: none;"href="{% url 'mp:itempage_pk' pk=item.product.pk %}"><h6 style=" color:black;font-family: 'Courier New', monospace;">{{item.product.name}}</h6></a>
+                        <!-- <p class="mb-3 text-muted text-uppercase small">Shirt - blue</p>
+                        <p class="mb-2 text-muted text-uppercase small">Color: blue</p> -->
+                        <p class="mb-3 text-muted text-uppercase small">Size: {{item.size}}</p>
+                        <p class="mb-0"><span><strong style="font-size: 1em;">Price: ₹{{item.product.newT}}0</strong><s style="color:	#808080;font-size: 0.9em;">₹{{ item.product.price }}0  </s></span></p>
+                      </div>
+                      <div>
+                        <!-- <div class="def-number-input number-input safari_only mb-0 w-100">
+                          <button style="width:30px;height:30px;background-color: inherit;border: none;margin-right: 20px;"onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                            class="minus"><strong>-</strong></button>
+                          <input style="width:40px; border: none;outline: none;"class="quantity" min="0" name="quantity" value="{{item.quantity}}" type="number">
+                          <button style="width:30px;height:30px;background-color: inherit;border: none;"onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                            class="plus"><strong>+</strong></button>
+                        </div> -->
+                        <div class="row">
+                          <!-- <a id="plus" class="plus" href="">+</a> -->
+                          <small><p id="plus" type="button" class="plus fa fa-plus fa-xs" p_id={{item.pk}} act = 'quantity_update'></p></small>
+                          <!-- <input style="width:40px; border: none;outline: none;"class="quantity" min="1" id="quantity" name="quantity" value="{{item.quantity}}" type="number"> -->
+                          <p style="margin-right: 10px;margin-left: 10px;font-size: 1.4em;margin-top: -10px;"><strong>{{item.quantity}}</strong></p>
+                          <small><p id="plus" class="plus fa fa-minus fa-xs" type="button" p_id={{item.pk}} act = 'quantity_down'></p></small>
+                          <!-- <a href="{% url 'mp:quantity_down' pk=item.pk %}">-</a> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <!-- <a href="" id="plus" type="button" class="card-link-secondary small text-uppercase mr-3 del"> Remove item </a> -->
+                        <h7 style="color:blue;"id="plus" class="plus" type="button" p_id={{item.pk}} act = 'removeitems'>remove item</h7>
+                      </div>
+                      <div>
+                        <p class="mb-0"><span><strong>Total-₹{{item.Total}}</strong></span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="mb-4">
+
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-lg-4">
+        <h4 class="mb-4"style="font-family: 'Courier New', monospace;">Summary</h4>
+        <!-- Card -->
+        <div class="card mb-3">
+          <div class="card-body">
+
+            <h5 class="mb-3"style="font-family: 'Courier New', monospace;">The total amount of</h5>
+
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                Total No. of Items
+                <span class="badge badge-secondary badge-pill">{{order.Total_Items}}</span>
+                <!-- <span>{{order.Total_Items}}</span> -->
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                <div>
+                  <strong>The total amount of</strong>
+                  <strong>
+                    <p class="mb-0">(including GST)</p>
+                  </strong>
+                </div>
+                <span><strong>₹{{order.Cart_Total}}0</strong></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                Total Savings
+                <span>₹{{order.Savings}}0</span>
+              </li>
+            </ul>
+            {% if items.count > 0 %}
+            <a style="box-shadow: none;outline:none; text-decoration:none;"href="{% url 'mp:checkout' %}"><button style="display: block;"type="button" class="btn btn-dark btn-block waves-effect waves-light">go to checkout</button></a>
+            {% endif %}
+            <!-- <script type="text/javascript">
+              alert("Atleast B")
+            </script> -->
+          </div>
+        </div>
+        <!-- Card -->
+
+        <!-- Card -->
+        <div class="card mb-3">
+          <div class="card-body">
+
+            <a style="color:black;opacity: 0.5;"class="dark-grey-text d-flex justify-content-between" data-toggle="collapse" href="#collapseExample1"
+              aria-expanded="false" aria-controls="collapseExample1">
+              Add a discount code (optional)
+              <span><i class="fas fa-chevron-down pt-1"></i></span>
+            </a>
+
+            <div class="collapse" id="collapseExample1">
+              <div class="mt-3">
+                <div class="md-form md-outline mb-0">
+                  <input type="text" id="discount-code1" class="form-control font-weight-light"
+                    placeholder="Enter discount code">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Card -->
+
+      </div>
+      <!--Grid column-->
+
+    </div>
+    <!--Grid row-->
+
+  </section>
+  <!--Section: Block Content-->
+</div>
+<script type="text/javascript">
+  console.log(1);
+  var plus = document.getElementsByClassName('plus')
+  var quantity = document.getElementsByClassName('quantity')
+  for (let i = 0; i < plus.length; i++) {
+    const v = plus[i].getAttribute("act")+'/'+plus[i].getAttribute("p_id")
+    plus[i].addEventListener('click',f=>{
+      p(v)
+    })
+  }
+  const p = (v) => {
+    $.ajax({
+        type: 'GET',
+        url:'http://127.0.0.1:8000/'+v,
+        data:{
+
+        },
+        success: function (i) {
+          console.log(456)
+          console.log("success")
+              location.reload()
+        }
+    })
+  }
+
+</script>
+{% else %}
+<script type="text/javascript">
+  window.location.href = "{% url 'mp:login' %}";
+</script>
+{% endif %}
+{% endblock content %}
