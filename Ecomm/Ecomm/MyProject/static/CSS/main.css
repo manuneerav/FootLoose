@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+}
+h1{
+  color: pink;
+}
+.navbar-brand {
+    font-size: 2rem;
+    color: black;
+
+}
+
+.navbar-brand:hover {
+    color:black;
+}
+
+.nav-link {
+    margin-right: 10px;
+    margin-left: 10px;
+    color:black;
+    text-transform: uppercase;
+    font-weight: 500;
+
+}
+
+.nav-link:hover {
+  color:black;
+
+}
+
+/* .login {
+    color: white;
+    margin-left: 20px;
+    margin-right: 10px;
+    padding-top: 10px;
+    font-weight:200;
+    text-decoration:none;
+    font-family: unset;
+    text-transform: uppercase;
+    margin-top: 1rem;
+    position: relative;
+} */
+
+input[type=search]{
+    display: block;
+    outline: none;
+    margin-left: 10rem;
+    padding: 5px 1px 5px 40px;
+    width: 25rem;
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
+    color:  #595959;
+    font-size:4mm;
+    font-weight: 400;
+    font-style:normal;
+    border:none;
+    background-color:white;
+    border-radius: 0;
+}
+
+input[type=search]:focus {
+     /* border: 1px groove whitesmoke; */
+     background-color: white;
+}
+
+svg{
+    margin-right: 4rem;
+
+
+}
+
+.social {
+    margin-left: 30rem;
+}
+
+
+
+/* ============ desktop view ============ */
+@media all and (min-width: 992px) {
+	.dropdown-menu li{ position: relative; 	}
+	.nav-item .submenu{
+		display: none;
+		position: absolute;
+		left:100%; top:-7px;
+	}
+	.nav-item .submenu-left{
+		right:100%; left:auto;
+	}
+	.dropdown-menu > li:hover{ background-color: #f1f1f1 }
+	.dropdown-menu > li:hover > .submenu{ display: block; }
+}
+/* ============ desktop view .end// ============ */
+
+/* ============ small devices ============ */
+@media (max-width: 991px) {
+  .dropdown-menu .dropdown-menu{
+      margin-left:0.7rem; margin-right:0.7rem; margin-bottom: .5rem;
+  }
+}
+/* ============ small devices .end// ============ */

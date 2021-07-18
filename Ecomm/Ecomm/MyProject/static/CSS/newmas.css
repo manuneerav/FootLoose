@@ -1,0 +1,27 @@
+*{
+  font-family: Arial Narrow;
+}
+.center {
+  margin-top: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+}
+
+.bx3{
+  margin: auto;
+  width: 69%;
+  height: auto;
+  /* border: 3px solid green; */
+  display: flex;
+  padding: 10px;
+  overflow: hidden;
+  text-align: center;
+}
+.thumbnail{
+width: 100%;
+height: auto;
+box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+}

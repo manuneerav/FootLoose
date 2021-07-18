@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>Ecom</title>
+
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" /> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<!-- <link href="https://cdn.j/#sdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+	integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous"> -->
+	<!-- <link rel="stylesheet" href="{% static 'CSS/main.css'%}"> -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" /> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"> -->
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" href="{% static 'CSS/main.css'%}">
+	<link rel="stylesheet" href="{% static 'CSS/newmas.css'%}">
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+	<!-- <link rel="stylesheet" href="{% static 'CSS/mystyle.css' %}"> -->
+	<script src="{% static 'Js/main1.js' %}" defer></script>
+	<!-- <link rel="stylesheet" href="{% static 'CSS/newforbase.css' %}"> -->
+	<link rel="stylesheet" href="{% static 'CSS/newforbase2.css' %}">
+</head>
+<body>
+	<style>
+	.loader {
+	            position: fixed;
+	            left: 0px;
+	            top: 0px;
+	            width: 100%;
+	            height: 100%;
+	            z-index: 9999;
+	            background-color: #ffffffcf;
+	        }
+	        .loader img{
+	            position: relative;
+	            left: 40%;
+	            top: 40%;
+	        }
+	</style>
+
+	<div class="loader" ><img src="{% static 'images/Pulse-1s-200px (1).gif' %}"></div>
+
+	<script>
+	    window.onload = function()
+	    {
+	        //display loader on page load
+	        $('.loader').fadeOut();
+	    }
+
+	</script>
+  <nav class="navbar sticky navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="{% url 'mp:store' %}"><strong>Footloose</strong></a>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul style="margin-left: 30%;"class="navbar-nav mr-auto mt-2 mt-lg-8">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'mp:sports' pk='running' %}">Running</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'mp:sports' pk='casuals' %}">casual</a>
+        </li>
+				<li class="nav-item">
+          <a class="nav-link" href="{% url 'mp:sports' pk='formals' %}">formals</a>
+        </li>
+      </ul>
+			<div>
+        <form style="margin-right: 70px; overflow:hidden;" id= "search-form" class="form-inline" >
+          {% csrf_token %}
+          <input id = "search-input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        </form>
+        <div id="results-box" class="results-card list-group list-group-flush not-visible" ></div>
+      </div>
+			</div>
+      </div>
+      <form class="form-inline my-2 my-lg-0">
+				{% if user.is_authenticated %}
+				<a href="{% url 'mp:logout_view' %}"><i style="margin-top: 5px;margin-right: auto;"class="fa fa-sign-out fa-lg mr-sm-3" aria-hidden="true"></i></a>
+				{% else %}
+				<a href="{% url 'mp:loginpage' %}"><i style="margin-top: 5px;margin-right: auto;"class="fa fa-user fa-lg mr-sm-3" aria-hidden="true"></i></a>
+
+				<!-- <i class="fas fa-star fa-lg"></i> -->
+				{% endif %}
+        <a href="{% url 'mp:cart' %}"><i class="fa fa-shopping-bag fa-lg my-2 my-sm-0" aria-hidden="true"></i></a>
+				<div style="width: 40px;"class="">
+
+				</div>
+      </form>
+    </div>
+</nav>
+<div style="max-height: 8.3rem;"class="bld not-visible" id="bld">
+
+</div>
+<div class="cb" id="cb">
+				{% block content %}
+
+
+				{% endblock content %}
+</div>
+<script type="text/javascript">
+const url = window.location.href
+const searchBox = document.getElementById('search-form')
+const bld = document.getElementById('bld')
+const searchInput = document.getElementById('search-input')
+const resultsBox = document.getElementById('results-box')
+const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
+
+
+const sendSearchData = (name) => {
+	$.ajax({
+			type: 'POST',
+			url:'http://127.0.0.1:8000/s/',
+			data:{
+				'csrfmiddlewaretoken':csrf,
+				'name': name,
+			},
+			success: (res)=>{
+					console.log(res)
+					// res.name=res.name.toUpperCase()
+					// console.log(typeof(res.data.length()));
+					console.log(res.resl);
+					console.log(res.data);
+					const data = res.data
+					if (Array.isArray(data)){
+						resultsBox.innerHTML = ""
+						bld.innerHTML = ""
+								data.forEach(res=>{
+									const l = res.image
+									const r = l.slice(1,-1);
+									res.name[0]=res.name[0].toUpperCase()
+									resultsBox.innerHTML += `
+										<div style="height:auto;font-weight: 100;width:auto;"class = "searchres list-group list-group-flush">
+										<a style="text-decoration: none;"href = "{% url 'mp:itempage' %}${res.pk}" class="item">
+										<div class="col-10 list-group list-group-flush">
+										<h5 style = "color : black;"><img style="width:4rem;height:4rem;margin-right: 2rem;"src="http://127.0.0.1:8000/images/${r}" alt="oops" class="img-fluid">      ${res.name}</h5>
+										</div>
+										</a>
+										</div>`
+										bld.innerHTML += `<br>
+										<br>
+											`
+								})
+					}else{
+						resultsBox.innerHTML = ""
+						bld.innerHTML = "<br>"
+									resultsBox.innerHTML += `
+										<div class="col-10">
+										<h5>Sorry,no result found</h5>
+										</div> `
+
+					}
+			},
+			error: (err)=>{
+					console.log(err)
+			}
+	})
+	}
+
+	searchInput.addEventListener('keyup',e =>{
+		console.log(e.target.value)
+		if(resultsBox.classList.contains('not-visible')){
+				resultsBox.classList.remove('not-visible')
+				bld.classList.remove('not-visible')
+
+		}
+
+		sendSearchData(e.target.value)
+
+	})
+	cb.addEventListener('click',m =>{
+		resultsBox.classList.add('not-visible')
+		bld.innerHTML = ""
+		bld.classList.add('not-visible')
+	})
+
+</script>
+<!-- <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br> -->
+
+
+	<!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
+
+	<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> -->
+
+	<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
+</body>
+</html>

@@ -1,0 +1,36 @@
+*{
+  font-family: Arial Narrow;
+}
+
+
+.nxp{
+  margin: auto;
+  width: 100%;
+  height: 45vh;
+  /* border: 3px solid green; */
+  padding: 10px;
+  overflow: hidden;
+  text-align: center;
+  /* background-image: url(); */
+}
+.mxp{
+  margin: auto;
+  width: 69%;
+  height: auto;
+  /* border: 3px solid green; */
+  /* padding: 10px; */
+  overflow: hidden;
+  text-align: center;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.btn {
+  display:block;
+  border-radius: 0;
+  border: 1px;
+}

@@ -1,0 +1,20 @@
+input[type="text"], textarea {
+outline: none;
+box-shadow:none !important;
+border:1px solid #ccc !important;
+}
+input[type="email"], textarea {
+outline: none;
+box-shadow:none !important;
+border:1px solid #ccc !important;
+}
+input[type="number"], textarea {
+outline: none;
+box-shadow:none !important;
+border:1px solid #ccc !important;
+}
+.btn{
+  outline: none;
+  box-shadow:none !important;
+  border:1px solid #ccc !important;
+}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<h1>ertyui</h1>
+{% for i in 'static/images'%}
+<h1>yuio</h1>
+{% endfor%}
+{% for product in products%}
+<h1>asdfghj</h1>
+<h2>{{product.name}}</h2>
+<img src="{{product.image.url}}" alt="ooopppsss">
+
+{% endfor %}
+
+{% endblock content%}

@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+  <br>
+  <div style="margin-top:4rem;"class="container">
+
+
+    <div class="row">
+      <div class="col-md-4 order-md-2 mb-4">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted">Your cart</span>
+          <span class="badge badge-secondary badge-pill">{{order.Total_Items}}</span>
+        </h4>
+        <ul class="list-group mb-3">
+          {% for item in items %}
+          <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+              <h6 class="my-0">{{item.product.name}} <small><span class="badge badge-secondary badge-pill">{{item.quantity}}</span></small></h6>
+              <small class="text-muted">Price - ₹{{item.product.newT}}</small>
+            </div>
+            <span class="text-muted">₹{{item.Total}}</span>
+          </li>
+          {% endfor %}
+
+        </ul>
+
+        <form class="card p-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Promo code">
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-secondary">Redeem</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="card col-md-8 order-md-1">
+        <h4 class="mb-3">Billing address</h4>
+        <!-- <form class="needs-validation" id="post-form" method = "POST">
+          {% csrf_token %} -->
+
+          <div class="mb-3">
+            <label for="username">Name</label>
+            <div class="input-group">
+              <input min="4" type="text" class="form-control" name="name" id="name" placeholder="name" value="" required>
+              <div class="invalid-feedback" style="width: 100%;">
+                Your username is required.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="phone">Phone No.</label>
+            <input minlength="10" type="text" class="form-control" name="phone" id="phone" placeholder="phone number" value="" required>
+            <div class="not-visible" id="invalid-phone">
+              Please enter a valid phoneNo.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" name="address" placeholder="address" id="address" value="" required>
+            <div class="invalid-feedback">
+              Please enter your shipping address.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+            <input type="text" class="form-control" name="address2" placeholder="address2" value="">
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-4 mb-3">
+              <label for="state">State</label>
+              <select class="custom-select d-block w-100" id="state" required>
+                <option value="" selected disabled>Choose...</option>
+                <option>California</option>
+                <option>las vegas</option>
+              </select>
+              <div class="invalid-feedback">
+                Please provide a valid state.
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="pincode">Zip</label>
+              <input minlength="6" type="text" class="form-control" name="pincode" id="pincode" placeholder="pincode" value="" required>
+              <div class="not-visible" id="invalid-zip">
+                6 digit Zip code required.
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center mt-3 login_container">
+            <!-- <input style="border: None;font-weight:bold;background-color:white;"class="login__submit" id="submit" type="submit" value="submit"> -->
+            <h5 style="font-family: 'Courier New', monospace;"id="submit" type="button" class="login__submit">submit</h5>
+            <div   class="payment not-visible" id='payment'>
+              <form style="margin-left: 5rem;"  action="{% url 'mp:success' %}" method="POST">
+                  <script
+                      src="https://checkout.razorpay.com/v1/checkout.js"
+                      data-key="rzp_test_QUldnLYWI6STEg"
+                      data-amount="{{payment.amount}}"
+                      data-currency="INR"
+                      data-order_id="{{payment.id}}"
+                      data-buttontext="Pay with Razorpay"
+                      data-name="Footloose"
+                      data-description="A Wild Sheep Chase is the third novel by Japanese author Haruki Murakami"
+                      data-image="https://example.com/your_logo.jpg"
+                      data-prefill.name="Footloose Inc."
+                      data-prefill.email="footloose@gmail.com"
+                      data-theme.color="#F37254"></script>
+                  <input type="hidden" custom="Hidden Element" name="hidden">
+                </form>
+            </div>
+          </div>
+          <input type="hidden" name="next" value="{{ next }}" />
+        <!-- </form> -->
+      </div>
+    </div>
+</div>
+<br>
+
+<script type="text/javascript">
+  var submit = document.getElementById('submit')
+  submit.addEventListener('click',g=>{
+    h()
+  })
+  const h=()=>{
+    var name = document.getElementById('name').value
+    var phone = document.getElementById('phone').value
+    var address = document.getElementById('address').value
+    var pincode = document.getElementById('pincode').value
+    console.log(name);
+    $.ajax({
+        type: 'POST',
+        url:'http://127.0.0.1:8000/shippingadd/',
+        data:{
+          'csrfmiddlewaretoken':csrf,
+          'name':name,
+          'phone':phone,
+          'address':address,
+          'pincode':pincode,
+        },
+        success:function (i) {
+          console.log(456);
+          if (phone.length==10){
+            if (pincode.length==6){
+                var pay = document.getElementById('payment')
+                if(pay.classList.contains('not-visible')){
+            				pay.classList.remove('not-visible')
+            				submit.classList.add('not-visible')
+            		}
+          }
+          else{
+            alert("Enter Correct Pincode")
+          }
+
+          }
+          else{
+            alert("Enter Correct phone Number")
+          }
+          }
+
+    })
+  }
+</script>
+
+{% endblock %}

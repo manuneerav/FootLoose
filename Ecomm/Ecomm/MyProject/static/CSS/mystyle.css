@@ -1,0 +1,136 @@
+body{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+h1{
+  display: inline-flex;
+}
+h2{
+  color: red;
+}
+/* .results-card {
+    width: 50%;
+    box-shadow: 0 8px 8px 0 rgba(0,0,0,0.25);
+    transition: 0.5s;
+    border-radius: 7px;
+    padding: 15px 15px;
+    margin: 0 auto;
+} */
+#results-box
+{
+    position: absolute;
+    width: auto;
+    background: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+
+    border: 1px solid gray;
+
+    /*This is relative to the navbar now*/
+    left: 0;
+    right: 0;
+    top: 40px;
+}
+
+.not-visible {
+    display: none;
+}
+
+/* #max{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+} */
+/* .slider{
+  margin: auto;
+  width: 70%;
+  height: 65vh;
+  padding: 10px;
+  overflow: hidden;
+} */
+
+/* .slides{
+  width: auto;
+  height: auto;
+  display: flex;
+  overflow: hidden;
+}
+
+.slide{
+  width: auto;
+  transition: 2s;
+}
+
+.slide img{
+  width: auto;
+  height: auto;
+} */
+
+
+/* .bx{
+  margin: auto;
+  width: 70%;
+  height: 45vh;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.bx2{
+  margin: auto;
+  width: 69%;
+  height: 17vh;
+  padding: 10px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.bx3{
+  margin: auto;
+  width: 69%;
+  height: auto;
+  border: 3px solid green;
+  display: flex;
+  padding: 10px;
+  overflow: hidden;
+  text-align: center;
+}
+
+#man{
+  margin-right: 150px;
+  border-radius: 400px;
+}
+
+.center{
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+  .thumbnail{
+  width: 100%;
+  height: auto;
+  box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+  }
+
+  .box-element{
+  background-color: #fff;
+  border-radius: 4px;
+	padding: 10px;
+}
+.btn{
+	border-radius: 0;
+}
+.active {
+  background-color: #717171;
+}
+h1{
+  color: red;
+}
+.hdng{
+  color: #66b3ff;
+} */

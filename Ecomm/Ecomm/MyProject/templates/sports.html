@@ -1,0 +1,74 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="">
+    </div>
+    <div class="container mt-5">
+        <h2 style="color:black;font-family: 'Courier New', monospace;">{{category|capfirst }}</h2>
+        <h3>Puma running shoes gives you the best performance.</h3>
+    </div>
+
+
+        <div class="container">
+        <div class="row">
+            {% for pr in products %}
+            <a style=" text-decoration: none;"href="{% url 'mp:itempage_pk' pk=pr.pk %}"><div class="card" style="width: 17rem;height:32rem;margin-left:3rem;margin-bottom:5rem;">
+              <div class="card uppercard"style="height: 25rem;overflow:hidden;">
+                <img style="margin-top:1rem;"src="{{ pr.image.url }}" class="card-img-top" alt="...">
+              </div>
+              <div style="font-family: 'Courier New', monospace;"class="card-body">
+                <h6 style="color:	black;"><strong>{{pr.brand|capfirst }}</strong></h6>
+                <h5 class=" card-title">{{ pr.name|capfirst  }}  <small><div id={{pr.pk}} class="ra"></div></small></h5>
+                <h6><strong style="color:	black;font-size: 1em;">Price:</strong></h6>
+                <p class="card-text"><strong style="color:	black;font-size: 1.2em;">₹{{pr.newT}}0  </strong><s style="color:	#808080;font-size: 1em;">₹{{ pr.price }}0</s><strong style="color:#009900;font-size:1em;margin-left:10px;">{{pr.discount}}%off</strong></p>
+                <!-- <a href="{% url 'mp:itempage_pk' pk=pr.pk %}"><button style="margin-left:35%;" type="button" class="btn btn-outline-dark">View</button></a> -->
+              </div>
+            </div>
+            </a>
+              <script>
+              var rat = document.getElementById({{pr.pk}})
+              console.log(rat);
+              var st = {{pr.str_rating}}
+              console.log(st)
+              for (let i = 0; i < st; i++) {
+                      rat.innerHTML += `<i style="color: rgb(248, 232, 37);"class="fa fa-star fa-xs mr-sm-1" aria-hidden="true"></i>`
+              }
+              </script>
+
+
+
+        {% endfor %}
+        {% if products.has_other_pages %}
+  <ul class="pagination mt-5" style="margin-left: 35rem;" >
+    {% if products.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true"><span>&laquo;</span></a>
+        </li>
+
+    {% endif %}
+    {% for i in products.paginator.page_range %}
+      {% if products.number == i %}
+        <li class="page-item active"><a class="page-link" href="#"><span>{{ i }} <span class="sr-only">(current)</span></span></a></li>
+      {% else %}
+        <li class="page-item disabled"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if products.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+    {% else %}
+    <li  class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true"><span>&raquo;</span></a>
+    </li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+
+
+        </div>
+        </div>
+
+
+{% endblock content %}
