@@ -17,5 +17,5 @@ gunicorn==20.1.0
 psycopg2==2.8.6
 pytz==2020.1
 sqlparse==0.4.1
-typing-extensions @ file:///tmp/build/80754af9/typing_extensions_1598376058250/work
+typing-extensions==3.10.0.0
 whitenoise==5.2.0
