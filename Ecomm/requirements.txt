@@ -1,4 +1,4 @@
--lake8 @ file:///tmp/build/80754af9/flake8_1601911421857/work
+
 alabaster==0.7.12
 aloe==0.1.19
 amqp==5.0.6
